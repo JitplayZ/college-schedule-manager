@@ -19,17 +19,17 @@ export default function Navigation() {
   const getThemeClasses = (theme: string, isActive: boolean) => {
     const themes = {
       blue: isActive 
-        ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-900 dark:text-blue-100 border-blue-300 dark:border-blue-600' 
-        : 'hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-700 dark:hover:text-blue-300',
+        ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-900 dark:text-blue-100 border-blue-300 dark:border-blue-600' 
+        : 'hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-200 text-muted-foreground dark:text-muted-foreground',
       green: isActive 
-        ? 'bg-green-100 dark:bg-green-900/40 text-green-900 dark:text-green-100 border-green-300 dark:border-green-600' 
-        : 'hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-700 dark:hover:text-green-300',
+        ? 'bg-green-100 dark:bg-green-900/50 text-green-900 dark:text-green-100 border-green-300 dark:border-green-600' 
+        : 'hover:bg-green-50 dark:hover:bg-green-900/30 hover:text-green-700 dark:hover:text-green-200 text-muted-foreground dark:text-muted-foreground',
       orange: isActive 
-        ? 'bg-orange-100 dark:bg-orange-900/40 text-orange-900 dark:text-orange-100 border-orange-300 dark:border-orange-600' 
-        : 'hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:text-orange-700 dark:hover:text-orange-300',
+        ? 'bg-orange-100 dark:bg-orange-900/50 text-orange-900 dark:text-orange-100 border-orange-300 dark:border-orange-600' 
+        : 'hover:bg-orange-50 dark:hover:bg-orange-900/30 hover:text-orange-700 dark:hover:text-orange-200 text-muted-foreground dark:text-muted-foreground',
       purple: isActive 
-        ? 'bg-purple-100 dark:bg-purple-900/40 text-purple-900 dark:text-purple-100 border-purple-300 dark:border-purple-600' 
-        : 'hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-700 dark:hover:text-purple-300',
+        ? 'bg-purple-100 dark:bg-purple-900/50 text-purple-900 dark:text-purple-100 border-purple-300 dark:border-purple-600' 
+        : 'hover:bg-purple-50 dark:hover:bg-purple-900/30 hover:text-purple-700 dark:hover:text-purple-200 text-muted-foreground dark:text-muted-foreground',
     };
     return themes[theme as keyof typeof themes] || '';
   };

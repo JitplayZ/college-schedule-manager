@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Calendar, Filter, Plus, Edit, Trash2, Clock, Sparkles, TrendingUp } from 'lucide-react';
+import { Calendar, Filter, Plus, Edit, Trash2, Clock, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -26,6 +26,7 @@ export default function Holidays() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingHoliday, setEditingHoliday] = useState<Holiday | null>(null);
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [formData, setFormData] = useState({
     name: '',
     date: '',
@@ -51,27 +52,6 @@ export default function Holidays() {
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
       .slice(0, 3);
   }, [holidays]);
-
-  const stats = [
-    {
-      title: 'Total Holidays',
-      value: holidays.length,
-      icon: Calendar,
-      change: '+2 this month'
-    },
-    {
-      title: 'Academic',
-      value: holidays.filter(h => h.type === 'academic').length,
-      icon: Sparkles,
-      change: 'School events'
-    },
-    {
-      title: 'National',
-      value: holidays.filter(h => h.type === 'national').length,
-      icon: TrendingUp,
-      change: 'Federal holidays'
-    }
-  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -168,6 +148,111 @@ export default function Holidays() {
         };
   };
 
+  // Calendar helper functions
+  const getDaysInMonth = (date: Date) => {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (date: Date) => {
+    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+  };
+
+  const isHolidayOnDate = (date: Date) => {
+    const dateString = date.toISOString().split('T')[0];
+    return holidays.find(holiday => holiday.date === dateString);
+  };
+
+  const navigateMonth = (direction: number) => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + direction, 1));
+  };
+
+  const renderCalendar = () => {
+    const daysInMonth = getDaysInMonth(currentDate);
+    const firstDay = getFirstDayOfMonth(currentDate);
+    const monthYear = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    
+    const days = [];
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    
+    // Empty cells for days before the first day of the month
+    for (let i = 0; i < firstDay; i++) {
+      days.push(<div key={`empty-${i}`} className="h-10 sm:h-12"></div>);
+    }
+    
+    // Days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+      const holiday = isHolidayOnDate(date);
+      const isToday = new Date().toDateString() === date.toDateString();
+      
+      days.push(
+        <div
+          key={day}
+          className={`
+            h-10 sm:h-12 flex items-center justify-center text-sm cursor-pointer rounded-lg transition-all duration-200
+            ${isToday ? 'bg-primary text-primary-foreground font-bold' : ''}
+            ${holiday ? (holiday.type === 'academic' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200') : 'hover:bg-accent'}
+            ${holiday ? 'font-semibold' : ''}
+          `}
+          title={holiday ? `${holiday.name} (${holiday.type})` : ''}
+          onClick={() => holiday && handleEdit(holiday)}
+        >
+          {day}
+        </div>
+      );
+    }
+    
+    return (
+      <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg font-bold">{monthYear}</CardTitle>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigateMonth(-1)}
+                className="hover:scale-105 transform transition-all duration-200"
+              >
+                ←
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigateMonth(1)}
+                className="hover:scale-105 transform transition-all duration-200"
+              >
+                →
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-7 gap-1 mb-2">
+            {dayNames.map(day => (
+              <div key={day} className="h-8 flex items-center justify-center text-xs font-semibold text-muted-foreground">
+                {day}
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-cols-7 gap-1">
+            {days}
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2 justify-center">
+            <div className="flex items-center gap-2 text-xs">
+              <div className="w-3 h-3 bg-purple-100 dark:bg-purple-900/30 rounded"></div>
+              <span className="text-muted-foreground">Academic</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs">
+              <div className="w-3 h-3 bg-blue-100 dark:bg-blue-900/30 rounded"></div>
+              <span className="text-muted-foreground">National</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -189,25 +274,6 @@ export default function Holidays() {
               <div className="bg-purple-100 dark:bg-purple-900/30 rounded-full p-3 sm:p-4 flex-shrink-0">
                 <Calendar className="h-6 w-6 sm:h-8 sm:w-8 text-purple-600 dark:text-purple-400" />
               </div>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
-              {stats.map((stat, index) => (
-                <div 
-                  key={stat.title} 
-                  className={`bg-purple-50/50 dark:bg-purple-900/10 rounded-lg p-3 sm:p-4 hover:scale-105 transform transition-all duration-200 animate-in fade-in-50 slide-in-from-bottom-3 duration-500 delay-${index * 100}`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-1">{stat.title}</p>
-                      <p className="text-xl sm:text-2xl font-bold text-foreground">{stat.value}</p>
-                      <p className="text-xs text-muted-foreground">{stat.change}</p>
-                    </div>
-                    <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400 flex-shrink-0" />
-                  </div>
-                </div>
-              ))}
             </div>
 
             {/* Controls */}
@@ -316,61 +382,26 @@ export default function Holidays() {
         </Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-          {/* Upcoming Holidays */}
+          {/* Calendar View */}
           <div className="lg:col-span-1">
-            <Card className="h-fit shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg font-bold">
-                  <Clock className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                  Upcoming Holidays
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 sm:space-y-4">
-                {upcomingHolidays.length > 0 ? (
-                  upcomingHolidays.map((holiday, index) => {
-                    const typeConfig = getTypeConfig(holiday.type);
-                    return (
-                      <div 
-                        key={holiday.id} 
-                        className={`border-l-4 border-purple-500 pl-3 sm:pl-4 py-2 hover:bg-accent/20 rounded-r-lg transition-all duration-200 cursor-pointer animate-in fade-in-50 slide-in-from-left-3 duration-500 delay-${index * 100}`}
-                        onClick={() => handleEdit(holiday)}
-                      >
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-foreground hover:text-primary transition-colors duration-200 truncate">
-                              {holiday.name}
-                            </h3>
-                            <p className="text-sm text-muted-foreground truncate">{formatDate(holiday.date)}</p>
-                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mt-2">
-                              <Badge variant="secondary" className={`${typeConfig.bg} ${typeConfig.text} text-xs`}>
-                                {holiday.type}
-                              </Badge>
-                              <span className="text-xs text-muted-foreground">
-                                {getRelativeDate(holiday.date)}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <div className="text-center py-6 sm:py-8">
-                    <Calendar className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-                    <p className="text-muted-foreground text-sm">No upcoming holidays</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            {renderCalendar()}
           </div>
 
           {/* Holiday List */}
           <div className="lg:col-span-2">
             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardHeader>
-                <CardTitle className="text-lg font-bold">
-                  All Holidays ({filteredHolidays.length})
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg font-bold">
+                    All Holidays ({filteredHolidays.length})
+                  </CardTitle>
+                  {upcomingHolidays.length > 0 && (
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Clock className="h-4 w-4" />
+                      <span>Next: {upcomingHolidays[0].name}</span>
+                    </div>
+                  )}
+                </div>
               </CardHeader>
               <CardContent className="space-y-3 sm:space-y-4">
                 {filteredHolidays.length > 0 ? (
