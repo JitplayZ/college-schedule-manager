@@ -81,35 +81,35 @@ export default function Home() {
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 animate-in fade-in-50 slide-in-from-bottom-3 duration-700">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 sm:mb-6 animate-in fade-in-50 slide-in-from-bottom-3 duration-700">
               <Sparkles className="h-4 w-4" />
               Modern Schedule Management
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 animate-in fade-in-50 slide-in-from-bottom-5 duration-700 delay-100">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6 animate-in fade-in-50 slide-in-from-bottom-5 duration-700 delay-100">
               College Schedule{' '}
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                 Manager
               </span>
             </h1>
             
-            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed animate-in fade-in-50 slide-in-from-bottom-5 duration-700 delay-200">
+            <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4 animate-in fade-in-50 slide-in-from-bottom-5 duration-700 delay-200">
               Organize and manage your college class schedules, track holidays, and stay on top of your academic calendar with our comprehensive scheduling system.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in fade-in-50 slide-in-from-bottom-5 duration-700 delay-300">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 animate-in fade-in-50 slide-in-from-bottom-5 duration-700 delay-300">
               <Link
                 to="/section-a"
-                className="inline-flex items-center justify-center px-8 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 hover:scale-105 transform transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 hover:scale-105 transform transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               <Link
                 to="/holidays"
-                className="inline-flex items-center justify-center px-8 py-3 rounded-lg border border-border bg-background/50 backdrop-blur-sm text-foreground font-medium hover:bg-accent hover:scale-105 transform transition-all duration-200"
+                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 rounded-lg border border-border bg-background/50 backdrop-blur-sm text-foreground font-medium hover:bg-accent hover:scale-105 transform transition-all duration-200"
               >
                 View Calendar
                 <Calendar className="ml-2 h-4 w-4" />
@@ -119,27 +119,27 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16">
           {stats.map((stat, index) => (
             <Card 
               key={stat.title}
               className={`group hover:shadow-lg hover:scale-105 transform transition-all duration-300 border-0 shadow-md hover:shadow-xl animate-in fade-in-50 slide-in-from-bottom-3 duration-500 delay-${index * 100}`}
             >
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">{stat.title}</p>
-                    <h3 className="text-3xl font-bold text-foreground group-hover:scale-110 transform transition-transform duration-200">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-3 sm:gap-0">
+                  <div className="text-center sm:text-left">
+                    <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-1">{stat.title}</p>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-foreground group-hover:scale-110 transform transition-transform duration-200">
                       {stat.value}
                     </h3>
                   </div>
-                  <div className={`${stat.bgColor} rounded-full p-3 group-hover:scale-110 transform transition-all duration-200`}>
-                    <stat.icon className={`h-6 w-6 ${stat.iconColor}`} />
+                  <div className={`${stat.bgColor} rounded-full p-2 sm:p-3 group-hover:scale-110 transform transition-all duration-200`}>
+                    <stat.icon className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.iconColor}`} />
                   </div>
                 </div>
-                <div className="mt-4 flex items-center text-sm text-muted-foreground">
+                <div className="mt-3 sm:mt-4 flex items-center justify-center sm:justify-start text-sm text-muted-foreground">
                   <TrendingUp className="h-4 w-4 mr-1 text-green-500" />
                   <span>Active</span>
                 </div>
@@ -149,15 +149,15 @@ export default function Home() {
         </div>
 
         {/* Section Cards */}
-        <div className="mb-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Class Sections</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+        <div className="mb-12 sm:mb-16">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">Class Sections</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto px-4">
               Explore your academic journey across different disciplines and subjects
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {sections.map((section, index) => (
               <Link
                 key={section.id}
@@ -187,7 +187,8 @@ export default function Home() {
                       </Badge>
                       <div className="flex items-center space-x-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-200">
                         <Users className="h-4 w-4" />
-                        <span>View Schedule</span>
+                        <span className="hidden sm:inline">View Schedule</span>
+                        <span className="sm:hidden">View</span>
                       </div>
                     </div>
                   </CardContent>
@@ -201,15 +202,15 @@ export default function Home() {
         <Card className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 animate-in fade-in-50 slide-in-from-bottom-5 duration-700">
           <div className="h-2 bg-gradient-to-r from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700" />
           
-          <CardContent className="p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <CardContent className="p-6 sm:p-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-sm font-medium mb-4">
                   <Calendar className="h-4 w-4" />
                   Holiday Management
                 </div>
                 
-                <h3 className="text-2xl font-bold text-foreground mb-4">
+                <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4">
                   Holiday Calendar
                 </h3>
                 
@@ -219,17 +220,18 @@ export default function Home() {
                 
                 <Link
                   to="/holidays"
-                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700 text-white font-medium rounded-lg hover:from-purple-600 hover:to-purple-700 dark:hover:from-purple-700 dark:hover:to-purple-800 transform transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                  className="inline-flex items-center px-4 sm:px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700 text-white font-medium rounded-lg hover:from-purple-600 hover:to-purple-700 dark:hover:from-purple-700 dark:hover:to-purple-800 transform transition-all duration-200 hover:scale-105 hover:shadow-lg"
                 >
                   <Calendar className="h-5 w-5 mr-2" />
-                  View Holiday Calendar
+                  <span className="hidden sm:inline">View Holiday Calendar</span>
+                  <span className="sm:hidden">View Calendar</span>
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </div>
               
               <div className="hidden lg:flex justify-center">
                 <div className="relative">
-                  <Calendar className="h-32 w-32 text-purple-200 dark:text-purple-800" />
+                  <Calendar className="h-24 w-24 sm:h-32 sm:w-32 text-purple-200 dark:text-purple-800" />
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-purple-600/20 rounded-full blur-2xl" />
                 </div>
               </div>

@@ -189,7 +189,7 @@ export default function SchedulePage({ title, data, theme, sectionId }: Schedule
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     
     return (
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 lg:gap-6">
         {days.map((day, index) => (
           <Card 
             key={day} 
@@ -208,29 +208,29 @@ export default function SchedulePage({ title, data, theme, sectionId }: Schedule
                     className={`p-3 rounded-lg ${config.cardBg} ${config.border} border hover:shadow-md hover:scale-105 transform transition-all duration-200 cursor-pointer group`}
                     onClick={() => handleEdit(course)}
                   >
-                    <h4 className="font-semibold text-sm text-foreground mb-1 group-hover:text-primary transition-colors duration-200">
+                    <h4 className="font-semibold text-sm text-foreground mb-1 group-hover:text-primary transition-colors duration-200 line-clamp-2">
                       {course.name}
                     </h4>
                     <div className="space-y-1">
                       <p className="text-xs text-muted-foreground flex items-center">
-                        <Clock className="h-3 w-3 mr-1" />
-                        {course.time}
+                        <Clock className="h-3 w-3 mr-1 flex-shrink-0" />
+                        <span className="truncate">{course.time}</span>
                       </p>
                       <p className="text-xs text-muted-foreground flex items-center">
-                        <User className="h-3 w-3 mr-1" />
-                        {course.instructor}
+                        <User className="h-3 w-3 mr-1 flex-shrink-0" />
+                        <span className="truncate">{course.instructor}</span>
                       </p>
                       <p className="text-xs text-muted-foreground flex items-center">
-                        <MapPin className="h-3 w-3 mr-1" />
-                        {course.room}
+                        <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
+                        <span className="truncate">{course.room}</span>
                       </p>
                     </div>
                   </div>
                 ))}
               {filteredCourses.filter(course => course.days.includes(day)).length === 0 && (
-                <div className="text-center py-8 text-muted-foreground">
-                  <Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                  <p className="text-sm">No classes</p>
+                <div className="text-center py-6 text-muted-foreground">
+                  <Calendar className="h-6 w-6 mx-auto mb-2 opacity-50" />
+                  <p className="text-xs">No classes</p>
                 </div>
               )}
             </CardContent>
@@ -244,16 +244,16 @@ export default function SchedulePage({ title, data, theme, sectionId }: Schedule
     return (
       <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full min-w-[640px]">
             <thead className={`bg-gradient-to-r ${config.gradient} text-white`}>
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider">Course</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider">Time</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider">Days</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider">Instructor</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider">Room</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider">Credits</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider">Actions</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Course</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Time</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Days</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Instructor</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Room</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Credits</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-card divide-y divide-border">
@@ -262,40 +262,40 @@ export default function SchedulePage({ title, data, theme, sectionId }: Schedule
                   key={course.id} 
                   className={`${index % 2 === 0 ? 'bg-card' : 'bg-muted/20'} hover:bg-accent/50 transition-colors duration-200`}
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-foreground">{course.name}</div>
+                  <td className="px-4 py-4">
+                    <div className="text-sm font-medium text-foreground line-clamp-2">{course.name}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4">
                     <div className="text-sm text-muted-foreground flex items-center">
-                      <Clock className="h-4 w-4 mr-2 text-muted-foreground" />
-                      {course.time}
+                      <Clock className="h-4 w-4 mr-2 text-muted-foreground flex-shrink-0" />
+                      <span className="truncate">{course.time}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4">
                     <div className="flex flex-wrap gap-1">
                       {course.days.map(day => (
-                        <Badge key={day} variant="secondary" className={`${config.bg} ${config.text}`}>
+                        <Badge key={day} variant="secondary" className={`${config.bg} ${config.text} text-xs`}>
                           {day.substring(0, 3)}
                         </Badge>
                       ))}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4">
                     <div className="text-sm text-muted-foreground flex items-center">
-                      <User className="h-4 w-4 mr-2 text-muted-foreground" />
-                      {course.instructor}
+                      <User className="h-4 w-4 mr-2 text-muted-foreground flex-shrink-0" />
+                      <span className="truncate">{course.instructor}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4">
                     <div className="text-sm text-muted-foreground flex items-center">
-                      <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
-                      {course.room}
+                      <MapPin className="h-4 w-4 mr-2 text-muted-foreground flex-shrink-0" />
+                      <span className="truncate">{course.room}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4">
                     <Badge variant="outline">{course.credits}</Badge>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <td className="px-4 py-4">
                     <div className="flex space-x-2">
                       <Button
                         variant="ghost"
@@ -326,27 +326,27 @@ export default function SchedulePage({ title, data, theme, sectionId }: Schedule
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <Card className="border-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
             <div className={`h-1 bg-gradient-to-r ${config.gradient}`} />
-            <CardHeader className="pb-6">
-              <div className="flex items-center justify-between mb-6">
+            <CardHeader className="pb-4 sm:pb-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-4">
                 <div>
-                  <CardTitle className="text-3xl font-bold text-foreground mb-2">{title}</CardTitle>
+                  <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground mb-2">{title}</CardTitle>
                   <CardDescription className="text-muted-foreground">
                     Manage your class schedule and course information
                   </CardDescription>
                 </div>
-                <div className={`${config.bg} rounded-full p-4`}>
-                  <Calendar className={`h-8 w-8 ${config.accent}`} />
+                <div className={`${config.bg} rounded-full p-3 sm:p-4 flex-shrink-0`}>
+                  <Calendar className={`h-6 w-6 sm:h-8 sm:w-8 ${config.accent}`} />
                 </div>
               </div>
 
               {/* Controls */}
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6">
-                <div className="lg:col-span-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <div className="sm:col-span-2 lg:col-span-2">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                     <Input
@@ -384,19 +384,20 @@ export default function SchedulePage({ title, data, theme, sectionId }: Schedule
                 </Select>
               </div>
 
-              <div className="flex justify-between items-center">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 mr-4">
+              {/* Stats and Add Button */}
+              <div className="flex flex-col lg:flex-row lg:items-end gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 flex-1">
                   {stats.map((stat, index) => (
                     <div 
                       key={stat.title} 
-                      className={`${config.cardBg} rounded-lg p-4 hover:scale-105 transform transition-all duration-200 animate-in fade-in-50 slide-in-from-bottom-3 duration-500 delay-${index * 100}`}
+                      className={`${config.cardBg} rounded-lg p-3 sm:p-4 hover:scale-105 transform transition-all duration-200 animate-in fade-in-50 slide-in-from-bottom-3 duration-500 delay-${index * 100}`}
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-sm font-medium text-muted-foreground mb-1">{stat.title}</p>
-                          <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                          <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-1">{stat.title}</p>
+                          <p className="text-xl sm:text-2xl font-bold text-foreground">{stat.value}</p>
                         </div>
-                        <stat.icon className={`h-5 w-5 ${config.accent}`} />
+                        <stat.icon className={`h-4 w-4 sm:h-5 sm:w-5 ${config.accent} flex-shrink-0`} />
                       </div>
                     </div>
                   ))}
@@ -405,20 +406,20 @@ export default function SchedulePage({ title, data, theme, sectionId }: Schedule
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                   <DialogTrigger asChild>
                     <Button 
-                      className={`bg-gradient-to-r ${config.gradient} hover:opacity-90 hover:scale-105 transform transition-all duration-200 shadow-lg hover:shadow-xl`}
+                      className={`bg-gradient-to-r ${config.gradient} hover:opacity-90 hover:scale-105 transform transition-all duration-200 shadow-lg hover:shadow-xl w-full lg:w-auto`}
                     >
                       <Plus className="h-4 w-4 mr-2" />
                       Add Course
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-2xl">
+                  <DialogContent className="max-w-2xl w-[95vw] max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle className="text-xl font-bold">
                         {editingCourse ? 'Edit Course' : 'Add New Course'}
                       </DialogTitle>
                     </DialogHeader>
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="name" className="text-sm font-medium">Course Name *</Label>
                           <Input
@@ -484,7 +485,7 @@ export default function SchedulePage({ title, data, theme, sectionId }: Schedule
                               variant={formData.days.includes(day) ? "default" : "outline"}
                               size="sm"
                               onClick={() => toggleDay(day)}
-                              className={`hover:scale-105 transform transition-all duration-200 ${
+                              className={`hover:scale-105 transform transition-all duration-200 text-xs sm:text-sm ${
                                 formData.days.includes(day) ? `bg-gradient-to-r ${config.gradient}` : ''
                               }`}
                             >
@@ -494,7 +495,7 @@ export default function SchedulePage({ title, data, theme, sectionId }: Schedule
                         </div>
                       </div>
 
-                      <div className="flex gap-3 pt-4">
+                      <div className="flex flex-col sm:flex-row gap-3 pt-4">
                         <Button 
                           type="submit" 
                           className={`flex-1 bg-gradient-to-r ${config.gradient} hover:opacity-90 hover:scale-105 transform transition-all duration-200`}
@@ -528,11 +529,11 @@ export default function SchedulePage({ title, data, theme, sectionId }: Schedule
         </div>
 
         {filteredCourses.length === 0 && (
-          <Card className="text-center py-16 mt-8 border-dashed border-2 hover:border-accent transition-colors duration-300">
+          <Card className="text-center py-12 sm:py-16 mt-6 sm:mt-8 border-dashed border-2 hover:border-accent transition-colors duration-300">
             <CardContent>
-              <Calendar className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-              <CardTitle className="text-xl font-semibold text-muted-foreground mb-2">No courses found</CardTitle>
-              <CardDescription className="text-muted-foreground mb-4">
+              <Calendar className="h-12 w-12 sm:h-16 sm:w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
+              <CardTitle className="text-lg sm:text-xl font-semibold text-muted-foreground mb-2">No courses found</CardTitle>
+              <CardDescription className="text-muted-foreground mb-4 px-4">
                 Start by adding your first course to the schedule
               </CardDescription>
               <Button 

@@ -170,48 +170,48 @@ export default function Holidays() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Header */}
-        <Card className="border-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 mb-8 overflow-hidden">
+        <Card className="border-0 shadow-xl hover:shadow-2xl transition-shadow duration-300 mb-6 sm:mb-8 overflow-hidden">
           <div className="h-1 bg-gradient-to-r from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700" />
-          <CardHeader className="pb-6">
-            <div className="flex items-center justify-between mb-6">
+          <CardHeader className="pb-4 sm:pb-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-4">
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-sm font-medium mb-3">
                   <Sparkles className="h-4 w-4" />
                   Holiday Management
                 </div>
-                <CardTitle className="text-3xl font-bold text-foreground mb-2">Holiday Calendar</CardTitle>
+                <CardTitle className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Holiday Calendar</CardTitle>
                 <CardDescription className="text-muted-foreground">
                   Academic and national holidays for the academic year
                 </CardDescription>
               </div>
-              <div className="bg-purple-100 dark:bg-purple-900/30 rounded-full p-4">
-                <Calendar className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+              <div className="bg-purple-100 dark:bg-purple-900/30 rounded-full p-3 sm:p-4 flex-shrink-0">
+                <Calendar className="h-6 w-6 sm:h-8 sm:w-8 text-purple-600 dark:text-purple-400" />
               </div>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
               {stats.map((stat, index) => (
                 <div 
                   key={stat.title} 
-                  className={`bg-purple-50/50 dark:bg-purple-900/10 rounded-lg p-4 hover:scale-105 transform transition-all duration-200 animate-in fade-in-50 slide-in-from-bottom-3 duration-500 delay-${index * 100}`}
+                  className={`bg-purple-50/50 dark:bg-purple-900/10 rounded-lg p-3 sm:p-4 hover:scale-105 transform transition-all duration-200 animate-in fade-in-50 slide-in-from-bottom-3 duration-500 delay-${index * 100}`}
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground mb-1">{stat.title}</p>
-                      <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                      <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-1">{stat.title}</p>
+                      <p className="text-xl sm:text-2xl font-bold text-foreground">{stat.value}</p>
                       <p className="text-xs text-muted-foreground">{stat.change}</p>
                     </div>
-                    <stat.icon className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                    <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400 flex-shrink-0" />
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Controls */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <div className="flex-1">
                 <Input
                   placeholder="Search holidays..."
@@ -221,7 +221,7 @@ export default function Holidays() {
                 />
               </div>
               <Select value={filter} onValueChange={(value: any) => setFilter(value)}>
-                <SelectTrigger className="w-48 hover:border-accent focus:border-primary transition-colors duration-200">
+                <SelectTrigger className="w-full sm:w-48 hover:border-accent focus:border-primary transition-colors duration-200">
                   <Filter className="h-4 w-4 mr-2" />
                   <SelectValue />
                 </SelectTrigger>
@@ -233,18 +233,18 @@ export default function Holidays() {
               </Select>
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-gradient-to-r from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700 hover:opacity-90 hover:scale-105 transform transition-all duration-200 shadow-lg hover:shadow-xl">
+                  <Button className="bg-gradient-to-r from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700 hover:opacity-90 hover:scale-105 transform transition-all duration-200 shadow-lg hover:shadow-xl w-full sm:w-auto">
                     <Plus className="h-4 w-4 mr-2" />
                     Add Holiday
                   </Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="w-[95vw] max-w-md max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
                     <DialogTitle className="text-xl font-bold">
                       {editingHoliday ? 'Edit Holiday' : 'Add New Holiday'}
                     </DialogTitle>
                   </DialogHeader>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                     <div>
                       <Label htmlFor="name" className="text-sm font-medium">Holiday Name *</Label>
                       <Input
@@ -288,7 +288,7 @@ export default function Holidays() {
                         className="mt-1 hover:border-accent focus:border-primary transition-colors duration-200"
                       />
                     </div>
-                    <div className="flex gap-3 pt-4">
+                    <div className="flex flex-col sm:flex-row gap-3 pt-4">
                       <Button 
                         type="submit" 
                         className="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700 hover:opacity-90 hover:scale-105 transform transition-all duration-200"
@@ -315,7 +315,7 @@ export default function Holidays() {
           </CardHeader>
         </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Upcoming Holidays */}
           <div className="lg:col-span-1">
             <Card className="h-fit shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -325,24 +325,24 @@ export default function Holidays() {
                   Upcoming Holidays
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4">
                 {upcomingHolidays.length > 0 ? (
                   upcomingHolidays.map((holiday, index) => {
                     const typeConfig = getTypeConfig(holiday.type);
                     return (
                       <div 
                         key={holiday.id} 
-                        className={`border-l-4 border-purple-500 pl-4 py-2 hover:bg-accent/20 rounded-r-lg transition-all duration-200 cursor-pointer animate-in fade-in-50 slide-in-from-left-3 duration-500 delay-${index * 100}`}
+                        className={`border-l-4 border-purple-500 pl-3 sm:pl-4 py-2 hover:bg-accent/20 rounded-r-lg transition-all duration-200 cursor-pointer animate-in fade-in-50 slide-in-from-left-3 duration-500 delay-${index * 100}`}
                         onClick={() => handleEdit(holiday)}
                       >
                         <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-foreground hover:text-primary transition-colors duration-200">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-foreground hover:text-primary transition-colors duration-200 truncate">
                               {holiday.name}
                             </h3>
-                            <p className="text-sm text-muted-foreground">{formatDate(holiday.date)}</p>
-                            <div className="flex items-center gap-2 mt-2">
-                              <Badge variant="secondary" className={`${typeConfig.bg} ${typeConfig.text}`}>
+                            <p className="text-sm text-muted-foreground truncate">{formatDate(holiday.date)}</p>
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mt-2">
+                              <Badge variant="secondary" className={`${typeConfig.bg} ${typeConfig.text} text-xs`}>
                                 {holiday.type}
                               </Badge>
                               <span className="text-xs text-muted-foreground">
@@ -355,9 +355,9 @@ export default function Holidays() {
                     );
                   })
                 ) : (
-                  <div className="text-center py-8">
-                    <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-                    <p className="text-muted-foreground">No upcoming holidays</p>
+                  <div className="text-center py-6 sm:py-8">
+                    <Calendar className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+                    <p className="text-muted-foreground text-sm">No upcoming holidays</p>
                   </div>
                 )}
               </CardContent>
@@ -372,7 +372,7 @@ export default function Holidays() {
                   All Holidays ({filteredHolidays.length})
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4">
                 {filteredHolidays.length > 0 ? (
                   filteredHolidays.map((holiday, index) => {
                     const typeConfig = getTypeConfig(holiday.type);
@@ -382,29 +382,31 @@ export default function Holidays() {
                         className={`border-l-4 ${typeConfig.border} hover:shadow-md hover:scale-[1.02] transform transition-all duration-200 cursor-pointer animate-in fade-in-50 slide-in-from-bottom-3 duration-500 delay-${index * 50}`}
                         onClick={() => handleEdit(holiday)}
                       >
-                        <CardContent className="p-4">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <div className="flex items-center gap-3 mb-2">
-                                <h3 className="text-lg font-semibold text-foreground hover:text-primary transition-colors duration-200">
+                        <CardContent className="p-3 sm:p-4">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+                                <h3 className="text-lg font-semibold text-foreground hover:text-primary transition-colors duration-200 truncate">
                                   {holiday.name}
                                 </h3>
-                                <Badge variant="secondary" className={`${typeConfig.bg} ${typeConfig.text}`}>
-                                  {holiday.type}
-                                </Badge>
-                                <span className="text-sm text-muted-foreground">
-                                  {getRelativeDate(holiday.date)}
-                                </span>
+                                <div className="flex items-center gap-2">
+                                  <Badge variant="secondary" className={`${typeConfig.bg} ${typeConfig.text} text-xs`}>
+                                    {holiday.type}
+                                  </Badge>
+                                  <span className="text-sm text-muted-foreground">
+                                    {getRelativeDate(holiday.date)}
+                                  </span>
+                                </div>
                               </div>
                               <p className="text-sm text-muted-foreground mb-2 flex items-center">
-                                <Calendar className="h-4 w-4 mr-1" />
-                                {formatDate(holiday.date)}
+                                <Calendar className="h-4 w-4 mr-1 flex-shrink-0" />
+                                <span className="truncate">{formatDate(holiday.date)}</span>
                               </p>
                               {holiday.description && (
-                                <p className="text-sm text-muted-foreground">{holiday.description}</p>
+                                <p className="text-sm text-muted-foreground line-clamp-2">{holiday.description}</p>
                               )}
                             </div>
-                            <div className="flex gap-2 ml-4">
+                            <div className="flex gap-1 sm:gap-2 flex-shrink-0">
                               <Button
                                 variant="ghost"
                                 size="sm"
@@ -412,7 +414,7 @@ export default function Holidays() {
                                   e.stopPropagation();
                                   handleEdit(holiday);
                                 }}
-                                className="hover:bg-accent hover:scale-110 transform transition-all duration-200"
+                                className="hover:bg-accent hover:scale-110 transform transition-all duration-200 h-8 w-8 p-0"
                               >
                                 <Edit className="h-4 w-4" />
                               </Button>
@@ -423,7 +425,7 @@ export default function Holidays() {
                                   e.stopPropagation();
                                   handleDelete(holiday.id);
                                 }}
-                                className="text-destructive hover:text-destructive hover:bg-destructive/10 hover:scale-110 transform transition-all duration-200"
+                                className="text-destructive hover:text-destructive hover:bg-destructive/10 hover:scale-110 transform transition-all duration-200 h-8 w-8 p-0"
                               >
                                 <Trash2 className="h-4 w-4" />
                               </Button>
@@ -435,12 +437,12 @@ export default function Holidays() {
                   })
                 ) : (
                   <Card className="border-dashed border-2 hover:border-accent transition-colors duration-300">
-                    <CardContent className="text-center py-12">
-                      <Calendar className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-                      <CardTitle className="text-xl font-semibold text-muted-foreground mb-2">
+                    <CardContent className="text-center py-8 sm:py-12">
+                      <Calendar className="h-12 w-12 sm:h-16 sm:w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
+                      <CardTitle className="text-lg sm:text-xl font-semibold text-muted-foreground mb-2">
                         No holidays found
                       </CardTitle>
-                      <CardDescription className="text-muted-foreground mb-4">
+                      <CardDescription className="text-muted-foreground mb-4 px-4">
                         No holidays found matching your criteria
                       </CardDescription>
                       <Button 
